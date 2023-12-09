@@ -144,6 +144,31 @@
         </div>
       </section>
       <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cartCountEl = document.getElementById('cart-count');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartCount() {
+        cartCountEl.textContent = cart.length;
+    }
+
+    document.querySelectorAll('.btn-add').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            const product = {
+                id: productId,
+                name: this.closest('.product').querySelector('h3').textContent,
+                price: this.closest('.product').querySelector('p').textContent
+            };
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        });
+    });
+
+    updateCartCount();
+});
+
       </script>
       <footer>
 
