@@ -107,40 +107,54 @@
             <i class="fab fa-pinterest"></i> 
           </a>
       </footer>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const cartItemsEl = document.getElementById('cart-items');
-    const subtotalEl = document.querySelector('.subtotal');
-    const taxEl = document.querySelector('.tax');
-    const totalEl = document.querySelector('.total');
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    function updateCartTotals() {
-        let subtotal = 0;
-        cart.forEach(item => {
-            subtotal += parseFloat(item.price.substring(1)); // assuming price like '$5'
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartItemsEl = document.getElementById('cart-items');
+            const subtotalEl = document.querySelector('.subtotal');
+            const taxEl = document.querySelector('.tax');
+            const totalEl = document.querySelector('.total');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+            function updateCartTotals() {
+                let subtotal = 0;
+                cart.forEach(item => {
+                    subtotal += parseFloat(item.price.substring(1)); // assuming price like '$5'
+                });
+                let tax = subtotal * 0.2; // assuming 20% tax rate
+                let total = subtotal + tax;
+        
+                subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+                taxEl.textContent = `$${tax.toFixed(2)}`;
+                totalEl.textContent = `$${total.toFixed(2)}`;
+            }
+        
+            function removeItemFromCart(productId) {
+                cart = cart.filter(item => item.id !== productId);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCartItems();
+                updateCartTotals();
+            }
+        
+            function displayCartItems() {
+                cartItemsEl.innerHTML = '';
+                cart.forEach(item => {
+                    const cartItemEl = document.createElement('div');
+                    cartItemEl.className = 'cart-item';
+                    cartItemEl.innerHTML = `
+                        <p>${item.name}</p>
+                        <p>${item.price}</p>
+                        <button onclick="removeItemFromCart('${item.id}')">Remove</button>
+                    `;
+                    cartItemsEl.appendChild(cartItemEl);
+                });
+            }
+        
+            window.removeItemFromCart = removeItemFromCart;
+        
+            displayCartItems();
+            updateCartTotals();
         });
-        let tax = subtotal * 0.2; // assuming 20% tax rate
-        let total = subtotal + tax;
-
-        subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-        taxEl.textContent = `$${tax.toFixed(2)}`;
-        totalEl.textContent = `$${total.toFixed(2)}`;
-    }
-
-    function displayCartItems() {
-        cartItemsEl.innerHTML = '';
-        cart.forEach(item => {
-            cartItemsEl.innerHTML += `<div class="cart-item">
-                <p>${item.name}</p>
-                <p>${item.price}</p>
-            </div>`;
-        });
-    }
-
-    displayCartItems();
-    updateCartTotals();
-});
-</script>
+        </script>
+        
 </body>
 </html>
