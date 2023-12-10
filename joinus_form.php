@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo $error . "<br>";
         }
     }
-}
 
 function test_input($data) {
     $data = trim($data);
