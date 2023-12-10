@@ -1,4 +1,4 @@
-/* Custom Product */
+/* Custom Product Styles */
 .custom-product {
     text-align: center;
 }
@@ -12,6 +12,7 @@
     justify-content: center;
     align-items: flex-start;
     margin-top: 20px;
+    flex-wrap: wrap; /* Added for responsiveness */
 }
 
 .product-images {
@@ -21,12 +22,20 @@
 
 .product-info {
     text-align: left;
+    width: 60%; /* Ensures alignment with product images */
 }
 
 .add-to-cart {
     background: #333;
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add-to-cart:hover {
+    background: #555;
 }
 
 .additional-info {
@@ -36,15 +45,18 @@
 .related-products {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap; /* Added for responsiveness */
     margin-top: 20px;
 }
 
 .related-product {
     text-align: center;
+    width: calc(100% / 3 - 10px); /* Three items per row with spacing */
+    margin-bottom: 20px;
 }
 
 .related-product img {
-    width: 200px;
+    width: 100%;
     height: auto;
 }
 
@@ -52,29 +64,44 @@
     text-align: left;
 }
 
-.details p {
-    font-weight: bold;
-}
-/* cart */
+/* Cart Styles */
 .cart {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);  
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     align-items: center; 
-  }
-  
-  .cart p {
+}
+
+.cart p {
     margin-bottom: 0;
-  }
-  
-  .totals {
-    grid-column: span 4;  
+}
+
+.totals {
+    grid-column: span 4;
     margin: 30px 0;
     padding: 15px; 
     border-top: 1px solid #eee;
-  }
-  
-  .totals p {
+}
+
+.totals p {
     display: inline-block;
     margin: 0 10px;
-  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .product-container, .related-products {
+        flex-direction: column;
+    }
+
+    .product-images, .product-info, .related-product {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .cart {
+        grid-template-columns: 1fr; /* Adjust grid for smaller screens */
+    }
+}
+
+/* Additional Styles as needed */
