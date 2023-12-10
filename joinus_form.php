@@ -1,4 +1,5 @@
 <?php
+include 'db.php'; // Include your database connection script
 // Server-side validation
 
 $firstName = $lastName = $email = $phone = $course = "";
@@ -42,21 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($course)) {
         $errors[] = "Course selection is required";
     }
-
-    // Database connection and insertion
-    if (empty($errors)) {
-        $servername = "localhost";
-        $username = "cyber"; // Your database username
-        $password = "Cybernights2023@"; // Your database password
-        $dbname = "womenintocybersecurity"; // Your database name
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
 
         // Prepare and bind
         $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, password, phone, course) VALUES (?, ?, ?, ?, ?, ?)");
