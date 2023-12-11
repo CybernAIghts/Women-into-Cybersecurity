@@ -148,11 +148,12 @@
                 cart.forEach(item => {
                     const cartItemEl = document.createElement('div');
                     cartItemEl.className = 'cart-item';
+                    const formattedPrice = `£${parseFloat(item.price.substring(1)).toFixed(2)}`; // Format price with £ symbol and two decimal places
                     cartItemEl.innerHTML = `
                         <img src="${item.image}" alt="${item.name}" class="product-image">
                         <div class="product-details">
                             <p>${item.name}</p>
-                            <p>Price: ${item.price}</p>
+                            <p>Price: ${formattedPrice}</p> <!-- Display the formatted price -->
                             <input type="number" value="${item.quantity}" min="1" id="quantity-${item.id}">
                             <button onclick="updateQuantity('${item.id}')">Update</button>
                             <button onclick="removeItemFromCart('${item.id}')">Remove</button>
@@ -161,6 +162,7 @@
                     cartItemsEl.appendChild(cartItemEl);
                 });
             }
+
 
             function updateQuantity(productId) {
                 const quantityInput = document.getElementById(`quantity-${productId}`);
