@@ -50,12 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let subtotal = 0;
         cart.forEach(item => {
             // Ensure item.price is a string and remove the currency symbol (e.g., '£')
-            let priceString = item.price;
             if (typeof item.price !== 'string') {
-                priceString = item.price.toString();
+                item.price = item.price.toString();
             }
-            priceString = priceString.replace('£', ''); // Remove the currency symbol
-            subtotal += parseFloat(priceString) * item.quantity;
+            item.price = item.price.replace('£', ''); // Remove the currency symbol
+            subtotal += parseFloat(item.price) * item.quantity;
         });
         let tax = subtotal * 0.2; // Assuming 20% tax rate
         let total = subtotal + tax;
@@ -65,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         taxEl.textContent = `£${tax.toFixed(2)}`;
         totalEl.textContent = `£${total.toFixed(2)}`;
     }
+    
 
     function removeItemFromCart(productId) {
         cart = cart.filter(item => item.id !== productId);
