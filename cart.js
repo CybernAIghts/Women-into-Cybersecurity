@@ -65,9 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         taxEl.textContent = `£${tax.toFixed(2)}`;
         totalEl.textContent = `£${total.toFixed(2)}`;
     }
-    
-    }
-    
 
     function removeItemFromCart(productId) {
         cart = cart.filter(item => item.id !== productId);
@@ -123,6 +120,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     displayCartItems();
     updateCartTotals();
-    
     updateCartCount(); // Call this once after everything is set up
 });
