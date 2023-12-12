@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update the cart in localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
+        displayCartItems(); // Added to refresh the cart display
     }
 
     document.querySelectorAll('.btn-add').forEach(button => {
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const productName = productEl.querySelector('h3').textContent;
             const productPrice = parseFloat(productEl.querySelector('p').textContent.substring(1));
             const productImage = productEl.querySelector('img').src;
-            
+
             addProductToCart(productId, productName, productPrice, productImage);
         });
     });
@@ -45,32 +46,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const taxEl = document.querySelector('.tax');
     const totalEl = document.querySelector('.total');
     const clearCartButton = document.getElementById('clear-cart');
-    
+
     function updateCartTotals() {
         let subtotal = 0;
         cart.forEach(item => {
             // Ensure item.price is a string and remove the currency symbol (e.g., '£')
+            let priceString = item.price;
             if (typeof item.price !== 'string') {
-                item.price = item.price.toString();
+                priceString = item.price.toString();
             }
-            item.price = item.price.replace('£', ''); // Remove the currency symbol
-            subtotal += parseFloat(item.price) * item.quantity;
+            priceString = priceString.replace('£', ''); // Remove the currency symbol
+            subtotal += parseFloat(priceString) * item.quantity;
         });
         let tax = subtotal * 0.2; // Assuming 20% tax rate
         let total = subtotal + tax;
-    
+
         // Use £ as the currency symbol for subtotal, tax, and total
         subtotalEl.textContent = `£${subtotal.toFixed(2)}`;
         taxEl.textContent = `£${tax.toFixed(2)}`;
         totalEl.textContent = `£${total.toFixed(2)}`;
     }
-    
 
     function removeItemFromCart(productId) {
         cart = cart.filter(item => item.id !== productId);
         localStorage.setItem('cart', JSON.stringify(cart));
         displayCartItems();
         updateCartTotals();
+        updateCartCount();
     }
 
     function clearCart() {
@@ -78,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('cart');
         displayCartItems();
         updateCartTotals();
+        updateCartCount();
     }
 
     function displayCartItems() {
@@ -111,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('cart', JSON.stringify(cart));
             displayCartItems();
             updateCartTotals();
+            updateCartCount();
         }
     }
 
