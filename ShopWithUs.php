@@ -116,5 +116,17 @@
       </footer>
 
     <script src="cart.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount();
+
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalCount;
+        }
+    });
+</script>
+
 </body>
 </html>
