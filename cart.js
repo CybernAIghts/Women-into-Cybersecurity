@@ -8,13 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function addProductToCart(productId, productName, productPrice, productImage) {
-        // Check if the product is already in the cart
         const existingProductIndex = cart.findIndex(item => item.id === productId);
         if (existingProductIndex > -1) {
-            // Increase the quantity
             cart[existingProductIndex].quantity += 1;
         } else {
-            // Add the new product
             cart.push({
                 id: productId,
                 name: productName,
@@ -23,10 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantity: 1
             });
         }
-        // Update the cart in localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-        displayCartItems(); // Added to refresh the cart display
+        displayCartItems();
     }
 
     document.querySelectorAll('.btn-add').forEach(button => {
@@ -50,18 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCartTotals() {
         let subtotal = 0;
         cart.forEach(item => {
-            // Ensure item.price is a string and remove the currency symbol (e.g., '£')
-            let priceString = item.price;
-            if (typeof item.price !== 'string') {
-                priceString = item.price.toString();
-            }
-            priceString = priceString.replace('£', ''); // Remove the currency symbol
+            let priceString = item.price.toString().replace('£', '');
             subtotal += parseFloat(priceString) * item.quantity;
         });
-        let tax = subtotal * 0.2; // Assuming 20% tax rate
+        let tax = subtotal * 0.2;
         let total = subtotal + tax;
 
-        // Use £ as the currency symbol for subtotal, tax, and total
         subtotalEl.textContent = `£${subtotal.toFixed(2)}`;
         taxEl.textContent = `£${tax.toFixed(2)}`;
         totalEl.textContent = `£${total.toFixed(2)}`;
@@ -94,11 +84,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>${item.name}</p>
                     <p>Price: £${item.price}</p>
                     <input type="number" value="${item.quantity}" min="1" id="quantity-${item.id}">
-                    <button onclick="updateQuantity('${item.id}')">Update</button>
-                    <button onclick="removeItemFromCart('${item.id}')">Remove</button>
+                    <button id="update-${item.id}">Update</button>
+                    <button id="remove-${item.id}">Remove</button>
                 </div>
             `;
             cartItemsEl.appendChild(cartItemEl);
+
+            document.getElementById(`remove-${item.id}`).addEventListener('click', function() {
+                removeItemFromCart(item.id);
+            });
+
+            document.getElementById(`update-${item.id}`).addEventListener('click', function() {
+                updateQuantity(item.id);
+            });
         });
     }
 
@@ -118,11 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    window.removeItemFromCart = removeItemFromCart;
-    window.updateQuantity = updateQuantity;
     clearCartButton.addEventListener('click', clearCart);
 
     displayCartItems();
     updateCartTotals();
-    updateCartCount(); // Call this once after everything is set up
+    updateCartCount();
 });
