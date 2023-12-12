@@ -40,5 +40,80 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    updateCartCount();
+    const cartItemsEl = document.getElementById('cart-items');
+    const subtotalEl = document.querySelector('.subtotal');
+    const taxEl = document.querySelector('.tax');
+    const totalEl = document.querySelector('.total');
+    const clearCartButton = document.getElementById('clear-cart');
+    
+    function updateCartTotals() {
+        let subtotal = 0;
+        cart.forEach(item => {
+            subtotal += parseFloat(item.price.substring(1)) * item.quantity;
+        });
+        let tax = subtotal * 0.2; // Assuming 20% tax rate
+        let total = subtotal + tax;
+
+        // Use £ as the currency symbol for subtotal, tax, and total
+        subtotalEl.textContent = `£${subtotal.toFixed(2)}`;
+        taxEl.textContent = `£${tax.toFixed(2)}`;
+        totalEl.textContent = `£${total.toFixed(2)}`;
+    }
+
+    function removeItemFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCartItems();
+        updateCartTotals();
+    }
+
+    function clearCart() {
+        cart = [];
+        localStorage.removeItem('cart');
+        displayCartItems();
+        updateCartTotals();
+    }
+
+    function displayCartItems() {
+        cartItemsEl.innerHTML = '';
+        cart.forEach(item => {
+            const cartItemEl = document.createElement('div');
+            cartItemEl.className = 'cart-item';
+            cartItemEl.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" class="product-image">
+                <div class="product-details">
+                    <p>${item.name}</p>
+                    <p>Price: £${item.price}</p>
+                    <input type="number" value="${item.quantity}" min="1" id="quantity-${item.id}">
+                    <button onclick="updateQuantity('${item.id}')">Update</button>
+                    <button onclick="removeItemFromCart('${item.id}')">Remove</button>
+                </div>
+            `;
+            cartItemsEl.appendChild(cartItemEl);
+        });
+    }
+
+    function updateQuantity(productId) {
+        const quantityInput = document.getElementById(`quantity-${productId}`);
+        const newQuantity = parseInt(quantityInput.value);
+        if (!isNaN(newQuantity) && newQuantity > 0) {
+            cart.forEach(item => {
+                if (item.id === productId) {
+                    item.quantity = newQuantity;
+                }
+            });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCartItems();
+            updateCartTotals();
+        }
+    }
+
+    window.removeItemFromCart = removeItemFromCart;
+    window.updateQuantity = updateQuantity;
+    clearCartButton.addEventListener('click', clearCart);
+
+    displayCartItems();
+    updateCartTotals();
+    
+    updateCartCount(); // Call this once after everything is set up
 });
