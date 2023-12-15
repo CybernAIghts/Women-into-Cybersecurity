@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Join Us</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="logo">
+        <img src="Images/Logo.png">
+      </div>
+    
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          
+          <li>
+            <a href="#">About Us ▾</a>
+            <ul>
+              <li><a href="Overview.html">Overview</a></li>
+              <li><a href="MeetTheFamily.html">Meet the Family</a></li>
+            </ul>
+          </li>
+      
+          <li>  
+            <a href="#">Get Involved ▾</a>
+            <ul>
+              <li><a href="UpcomingEvents.html">Upcoming Events</a></li>
+              <li><a href="ProfessionalDevelopment.html">Professional Development</a></li>
+              <li><a href="Sponsorship&Collaboration.html">Sponsorship & Collaboration</a></li>
+              <li><a href="EventCalender.html">Event Calendar</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">Blog ▾</a>
+            <ul>
+              <li><a href="FeaturedArticles.html">Featured Articles</a></li>
+              <li><a href="MembershipSpotlight.html">Membership Spotlight</a></li>
+            </ul>
+          </li>
+          
+          <li><a href="ShopWithUs.html">Shop With Us</a></li>
+          
+          <li>
+            <a href="#">Contact Us ▾</a>
+            <ul>
+              <li><a href="GetInTouch.html">Get in Touch</a></li>  
+              <li><a href="FAQs.html">FAQs</a></li>
+            </ul>
+          </li>
+      
+          <li><a href="JoinUs.html">Join Us</a></li>
+    
+          <li>
+            <a href="#">Account ▾</a>
+            <ul>
+              <li><a href="SignIn.html">Sign In</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="page-content">
+
+        <h1>Join Us</h1>
+        
+        <h3>Sign up today to get started</h3>
+      </div>
+
+<form id="signup">
+
+  <input type="text" id="first-name" required placeholder="First Name">
+   
+  <input type="text" id="last-name" required placeholder="Last Name">
+  
+  <input type="email" id="email" required placeholder="Email">
+  
+  <input type="password" id="password" required placeholder="Create Password">
+  
+  <p class="hint">
+    Password must be 8+ characters with 1 uppercase, 1 lowercase, 1 number 
+  </p>
+   
+  <input type="tel" id="phone" placeholder="Phone Number">
+   
+  <select id="course">
+    <option>BSc (Hons) in Cybersecurity</option>
+    <option>Others</option> 
+  </select>
+  
+  <div class="terms">
+    <input type="checkbox" id="terms" required> 
+    
+    <label for="terms">
+      I agree to the 
+      <a href="#">terms &amp; conditions</a>
+    </label>
+  </div>
+   
+  <button>Join Now</button>
+   
+</form>
+
+ <div id="success" style="display:none">
+  Thanks for signing up! Check your email for confirmation.
+ </div>
+ <script>
+const form = document.getElementById("signup");
+
+// Get input elements
+const firstName = document.getElementById("first-name"); 
+const email = document.getElementById("email");
+
+form.addEventListener("submit", (e) => {
+
+  e.preventDefault();
+   
+  // Validation checks
+  if(!firstName.value) {
+  showError(firstName, "First name required");
+  isValid = false;
+}
+
+if(!lastName.value) {
+  showError(lastName , "Last name required");
+  isValid = false;  
+}
+
+if(!email.value) {
+  showError(email, "Email is required");
+  isValid = false; 
+  }
+   function showError(msg) {
+   const error = document.createElement("p");
+   error.classList.add("error");
+   error.textContent = msg;
+
+   this.parentElement.insertBefore(error, this);
+   }
+   if(isValid) {
+   form.submit();
+   showSuccess();
+   }
+   function showSuccess() {
+   document.getElementById("success").style = "display:block";
+   }
+    document.getElementById("success").style = "display:block";
+    });
+  </script>
+      <footer>
+
+        <p>&copy; 2023 Women in Cybersecurity. All rights reserved.</p>
+      
+        <div class="policies">
+          <a href="#">Privacy Policy</a> | 
+          <a href="#">Terms & Conditions</a>
+        </div>
+        <head>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+          </head>
+        <a href="https://www.facebook.com/profile.php?id=61554140456547">
+            <i class="fab fa-facebook"></i>  
+        </a>
+        <a href="https://www.instagram.com/women_into_cybersecurity/" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/women-into-cybersecurity-a139542a1/" target="_blank">
+            <i class="fab fa-linkedin-in"></i> 
+          </a>
+          <a href="https://www.pinterest.co.uk/womenintocybersecurity/" target="_blank">
+            <i class="fab fa-pinterest"></i> 
+          </a>
+      </footer>
+</body>
+</html>
